@@ -15,13 +15,22 @@
 // ============================================================================
 
 // Inclusão das bibliotecas padrão necessárias para entrada/saída, alocação de memória, manipulação de strings e tempo.
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <locale.h>
 
 // --- Constantes Globais ---
 // Definem valores fixos para o número de territórios, missões e tamanho máximo de strings, facilitando a manutenção.
-
+int count = 0;
+struct territorio mapa_mundi[5];
 // --- Estrutura de Dados ---
 // Define a estrutura para um território, contendo seu nome, a cor do exército que o domina e o número de tropas.
-
+struct territorio {
+char nome[30];
+char cor[10];
+int tropa;
+};
 // --- Protótipos das Funções ---
 // Declarações antecipadas de todas as funções que serão usadas no programa, organizadas por categoria.
 // Funções de setup e gerenciamento de memória:
@@ -34,9 +43,12 @@
 int main() {
     // 1. Configuração Inicial (Setup):
     // - Define o locale para português.
+    setlocale(LC_ALL, "pt_BR.UTF-8");
     // - Inicializa a semente para geração de números aleatórios com base no tempo atual.
     // - Aloca a memória para o mapa do mundo e verifica se a alocação foi bem-sucedida.
     // - Preenche os territórios com seus dados iniciais (tropas, donos, etc.).
+    inicializarTerritorios()
+
     // - Define a cor do jogador e sorteia sua missão secreta.
 
     // 2. Laço Principal do Jogo (Game Loop):
@@ -60,9 +72,25 @@ int main() {
 // Aloca dinamicamente a memória para o vetor de territórios usando calloc.
 // Retorna um ponteiro para a memória alocada ou NULL em caso de falha.
 
-// inicializarTerritorios():
+inicializarTerritorios():
+do {
+        printf("Digite o nome do território: ");
+        scanf("%s", mapa_mundi[count].nome);
+
+        printf("Digite a cor do território: ");
+        scanf("%s", mapa_mundi[count].cor);
+
+        printf("Digite o numero de tropas do território: ");
+        scanf("%d", &mapa_mundi[count].tropa);
+        printf("\n");
+        fgets(mapa_mundi[count].tropa, 50, stdin); // limpar o buffer
+        mapa_mundi[count].tropa[strcspn(mapa_mundi[count].tropa ,"\n")] = 0; // remover o \n do final
+        count++;
+    } while ( count < 5 );
+
 // Preenche os dados iniciais de cada território no mapa (nome, cor do exército, número de tropas).
 // Esta função modifica o mapa passado por referência (ponteiro).
+
 
 // liberarMemoria():
 // Libera a memória previamente alocada para o mapa usando free.
@@ -70,7 +98,17 @@ int main() {
 // exibirMenuPrincipal():
 // Imprime na tela o menu de ações disponíveis para o jogador.
 
-// exibirMapa():
+exibirMapa():
+printf ("Mapa: ");
+printf("\n");
+
+for (int i = 0 ; i < count; i++) {
+    printf ("%d° territorio: \n",i+1);
+    printf ("Nome: %s\n", mapa_mundi[i].nome);
+    printf ("Cor: %s\n", mapa_mundi[i].cor);
+    printf ("Tropas: %d\n", mapa_mundi[i].tropa);
+    printf("\n");
+}
 // Mostra o estado atual de todos os territórios no mapa, formatado como uma tabela.
 // Usa 'const' para garantir que a função apenas leia os dados do mapa, sem modificá-los.
 
@@ -96,3 +134,4 @@ int main() {
 
 // limparBufferEntrada():
 // Função utilitária para limpar o buffer de entrada do teclado (stdin), evitando problemas com leituras consecutivas de scanf e getchar.
+
